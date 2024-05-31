@@ -1,4 +1,3 @@
-/* tady bude tvůj kód */
 const movieList = document.querySelector('#movies');
 
 const Movie = ({ posterUrl, title, url, year, genres }) => {
@@ -21,28 +20,20 @@ const showMovies = (movies) => {
 
 const sortMoviesUp = () => {
   movies.sort((a, b) => a.year - b.year);
+  showMovies(movies);
 };
 
 const sortMoviesDown = () => {
   movies.sort((a, b) => b.year - a.year);
+  showMovies(movies);
 };
 
 const sortUpButton = document.querySelector('.button__sort--up');
 sortUpButton.addEventListener('click', sortMoviesUp);
 
 const sortDownButton = document.querySelector('.button__sort--down');
-sortUpButton.addEventListener('click', sortMoviesDown);
+sortDownButton.addEventListener('click', sortMoviesDown);
 
-const fetchMovie = async () => {
-  const response = await fetch(
-    'https://apps.kodim.cz/daweb/trening-api/apis/movie-api/movies',
-  );
-  const data = await response.json();
-  return data;
-};
-
-const main = async () => {
-  const movies = await fetchMovie();
-  showMovies(movies);
-};
-main();
+fetch('https://apps.kodim.cz/daweb/trening-api/apis/movie-api/movies')
+  .then((response) => response.json())
+  .then(showMovies);
